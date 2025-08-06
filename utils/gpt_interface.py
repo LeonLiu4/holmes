@@ -1,9 +1,9 @@
-import openai
+from openai import OpenAI
 
 def analyze_chat_log(chat_log, prompt, api_key):
-    openai.api_key = api_key
+    client = OpenAI(api_key=api_key)
 
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": prompt},
@@ -11,4 +11,5 @@ def analyze_chat_log(chat_log, prompt, api_key):
         ],
         max_tokens=1000
     )
-    return response['choices'][0]['message']['content']
+
+    return response.choices[0].message.content
